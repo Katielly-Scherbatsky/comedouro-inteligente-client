@@ -1,0 +1,1 @@
+# comedouro-inteligente-client
