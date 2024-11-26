@@ -64,7 +64,7 @@ cd comedouro-inteligente-client
 yarn
 ```
 
-- Execute o servidor:
+- Execute o cliente:
 ```bash
 yarn dev
 ```
