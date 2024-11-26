@@ -1,39 +1,93 @@
-# comedouro-inteligente-client
+# Comedouro Inteligente 🐾
 
-This template should help get you started developing with Vue 3 in Vite.
+O **Comedouro Inteligente** é um projeto desenvolvido para facilitar e automatizar a alimentação de animais de estimação, integrando hardware com Arduino e software com um cliente web e uma API. Este sistema monitora e gerencia a alimentação, envia notificações de saúde e permite automação, como o pedido automático de ração.
 
-## Recommended IDE Setup
+## Estrutura do Projeto
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+O projeto está dividido em duas partes principais:
 
-## Type Support for `.vue` Imports in TS
+### 1. **Client** (Frontend)
+- Desenvolvido com **HTML**, **CSS** e **JavaScript**.
+- Responsável por oferecer uma interface amigável para interação do usuário.
+- Funcionalidades:
+  - Visualização dos dados do pet (alimentação, notificações).
+  - Configuração da programação do comedouro.
+  - Histórico e relatórios.
+  - Gerenciamento de fornecedores e pedidos de ração.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### 2. **Server** (Backend)
+- Construído com **NestJS**.
+- Gerencia a lógica do sistema, processa os dados do comedouro e integra-se ao banco de dados.
+- Banco de dados hospedado no **Supabase**.
+- Funcionalidades:
+  - CRUD de pets.
+  - Controle de alimentação e notificações.
+  - API para sincronização com o cliente web e o hardware.
 
-## Customize configuration
+---
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Tecnologias Utilizadas
 
-## Project Setup
+### Client:
+- **HTML5**: Estrutura da aplicação.
+- **CSS3**: Estilização da interface.
+- **JavaScript**: Dinamismo e manipulação da interface.
 
+### Server:
+- **NestJS**: Framework backend para criação da API.
+- **TypeORM**: Integração e manipulação do banco de dados.
+- **Supabase**: Banco de dados em nuvem para armazenar informações do sistema.
+
+### Hardware:
+- **Arduino**: Controle do comedouro automatizado, utilizando sensores para monitorar abertura de tampa e tempo de alimentação.
+
+---
+
+## Instalação e Dependências
+
+### Requisitos:
+- **Node.js** (v16 ou superior)
+- **NPM** ou **Yarn**
+- **Arduino IDE** (para programar o hardware)
+- Conta no **Supabase** (para configuração do banco de dados)
+
+### Passo a Passo:
+
+#### 1. Clone o repositório:
 ```sh
+git clone https://github.com/usuario/comedouro-inteligente-client.git
+cd comedouro-inteligente-client
+```
+
+#### 2. Instalar dependências:
+```bash
 yarn
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
+- Execute o servidor:
+```bash
 yarn dev
 ```
 
-### Type-Check, Compile and Minify for Production
+## Funcionalidades
 
-```sh
-yarn build
-```
+### 💻 Interface Web (Client):
+- Gerenciamento de pets: nome, raça, peso e idade.
+- Histórico de alimentação e notificações de saúde.
+- Configuração do comedouro inteligente: horários, porções.
+- Relatórios e acompanhamento de saúde do pet.
 
-### Lint with [ESLint](https://eslint.org/)
+### 🌐 API (Server):
+- Endpoints REST para CRUD de pets e controle de alimentação.
+- Integração com o Arduino para sincronizar dados em tempo real.
+- Gerenciamento de notificações e pedidos de ração.
 
-```sh
-yarn lint
-```
+### 🛠️ Hardware (Arduino):
+- Controle da tampa do comedouro baseado em sensores.
+- Monitoramento de tempo de alimentação.
+- Notificações automáticas via API.
+
+### Licença
+Este projeto está licenciado sob a **MIT License**. Consulte o arquivo [LICENSE](./LICENSE) para mais detalhes.
+
+Desenvolvido por ...
