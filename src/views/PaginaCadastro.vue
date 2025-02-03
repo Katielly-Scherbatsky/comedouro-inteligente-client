@@ -8,13 +8,11 @@
   <v-app>
     <v-main>
       <v-container>
-        <v-row justify="center" class="brand-section">
-          <img src="../assets//logo.svg"
-            alt="Pet Profile Logo"
-            class="brand-logo"
-            max-height="200"
-          />
-        </v-row>
+        <img src="../assets//logo.svg"
+          alt="Pet Profile Logo"
+          class="brand-logo"
+          max-height="200"
+        />
 
         <v-row justify="center">
           <v-col cols="12" md="6" class="setup-content">
