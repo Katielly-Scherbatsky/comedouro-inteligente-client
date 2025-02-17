@@ -6,11 +6,10 @@
         <template v-if="!isMobile">
           <v-row justify="center">
             <v-col cols="12" class="setup-content">
+              <h1 id="setup-title" class="setup-title">Perfil do Usuário</h1>
               <v-avatar class="avatar" size="100">
                 <span>{{ avatarInitials }}</span>
               </v-avatar>
-              <h1 id="setup-title" class="setup-title">Perfil do Usuário</h1>
-              <p class="setup-description">Veja suas informações abaixo</p>
               <v-card class="profile-card">
                 <v-card-text>
                   <p><strong>Nome:</strong> {{ usuario.nome }}</p>
@@ -25,12 +24,11 @@
         <!-- Versão Mobile -->
         <template v-else>
           <v-row justify="center">
-            <v-col cols="12" class="setup-content-mobile">
+            <v-col cols="12" class="setup-content-mobile" style="padding-top: 60px;">
               <v-avatar class="avatar mt-12" size="80">
                 <span>{{ avatarInitials }}</span>
               </v-avatar>
               <h1 id="setup-title" class="setup-title-mobile">Perfil do Usuário</h1>
-              <p class="setup-description-mobile">Veja suas informações abaixo</p>
               <v-card class="profile-card-mobile">
                 <v-card-text>
                   <p><strong>Nome:</strong> {{ usuario.nome }}</p>
@@ -182,7 +180,6 @@ export default {
   width: 95%;
   margin: 20px auto;
   border-radius: 10px;
-  height: 100vh;
 }
 
 .setup-title-mobile {

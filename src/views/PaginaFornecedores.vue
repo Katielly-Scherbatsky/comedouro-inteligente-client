@@ -16,7 +16,7 @@
             <v-container v-if="!possuiFornecedor">
               <v-row justify="center">
                 <v-col cols="12" class="setup-content">
-                  <h1 id="setup-title" class="setup-title">Fornecedores!</h1>
+                  <h1 id="setup-title" class="setup-title">Fornecedores</h1>
                   <!-- <p class="setup-description">
                     Parece que você não tem nenhum fornecedor.
                   </p> -->
@@ -81,7 +81,6 @@
               <v-row justify="center">
                 <v-col cols="12" class="setup-content">
                   <h1 id="setup-title" class="setup-title">Fornecedores realizados!</h1>
-                  <p class="setup-description">Seus Fornecedores:</p>
                   <v-col
                     v-for="fornecedor in fornecedores"
                     :key="fornecedor.id"
@@ -174,8 +173,8 @@
             <!-- Sem fornecedores cadastrados -->
             <v-container v-if="!possuiFornecedor" class="pa-0">
               <v-row justify="center">
-                <v-col cols="12" class="setup-content-mobile">
-                  <h1 id="setup-title" class="setup-title-mobile">Fornecedores!</h1>
+                <v-col cols="12" class="setup-content-mobile" style="padding-top: 60px;">
+                  <h1 id="setup-title" class="setup-title-mobile">Fornecedores</h1>
                   <!-- <p class="setup-description-mobile">
                     Parece que você não tem nenhum fornecedor.
                   </p> -->
@@ -237,9 +236,8 @@
             <!-- Quando há fornecedores cadastrados -->
             <v-container v-else class="pa-0">
               <v-row justify="center">
-                <v-col cols="12" class="setup-content-mobile">
+                <v-col cols="12" class="setup-content-mobile" style="padding-top: 60px;">
                   <h1 id="setup-title" class="setup-title-mobile">Fornecedores realizados!</h1>
-                  <p class="setup-description-mobile">Seus Fornecedores:</p>
                   <v-col
                     v-for="fornecedor in fornecedores"
                     :key="fornecedor.id"
@@ -452,7 +450,6 @@ export default {
   text-align: center;
   width: 100%;
   margin: 0;
-  height: 100vh;
 }
 
 .setup-title-mobile {

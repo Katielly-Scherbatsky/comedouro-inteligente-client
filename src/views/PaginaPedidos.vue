@@ -70,9 +70,6 @@
               <h1 id="setup-title" class="setup-title">
                 Pedidos realizados!
               </h1>
-              <p class="setup-description">
-                Seus Pedidos:
-              </p>
               <v-col
                 v-for="pedido in pedidos"
                 :key="pedido.id"

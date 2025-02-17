@@ -1,6 +1,5 @@
 import api from '../../services/api';
 
-// Função utilitária para centralizar requisições e tratamento de erros
 const handleRequest = async (requestFn, successMessage, errorMessage) => {
   try {
     const response = await requestFn();
@@ -177,7 +176,7 @@ export const listarFornecedor = async (usuarioId, data, status, produtoId, preco
 
 export const obterComedouro = async () => {
   return handleRequest(
-    () => api.get("/comedouro/obter"),
+    () => api.get("/comedouro"),
     "Obtenção de comedouro bem-sucedida:",
     "Erro ao obter comedouro:"
   );

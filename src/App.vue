@@ -92,9 +92,9 @@ onUpdated(() => {
           <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/horarios">
             <v-list-item prepend-icon="mdi-alarm" title="Horários"></v-list-item>
           </v-btn>
-          <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/pedidos">
+          <!-- <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/pedidos">
             <v-list-item prepend-icon="mdi-cart-variant" title="Pedidos"></v-list-item>
-          </v-btn>
+          </v-btn> -->
           <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/fornecedores">
             <v-list-item prepend-icon="mdi-truck-fast-outline" title="Fornecedores"></v-list-item>
           </v-btn>

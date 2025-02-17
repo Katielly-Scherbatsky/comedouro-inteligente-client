@@ -8,7 +8,7 @@
           <v-container v-if="!possuiHorarios">
             <v-row justify="center">
               <v-col cols="12" class="setup-content">
-                <h1 id="setup-title" class="setup-title">Horários do Comedouro!</h1>
+                <h1 id="setup-title" class="setup-title">Horários do Comedouro</h1>
                 <p class="setup-description">
                   Parece que você não tem nenhum horário configurado no momento. Configure um agora.
                 </p>
@@ -20,29 +20,98 @@
             </v-row>
           </v-container>
           
-          <!-- Exibe os horários já cadastrados -->
+          <!-- Exibe os horários já cadastrados com slider se houver mais de 4 alarmes -->
           <v-container v-else class="pa-0">
             <v-row justify="center">
               <v-col cols="12" class="setup-content">
-                <h1 id="setup-title" class="setup-title">Horários do Comedouro!</h1>
-                <p class="setup-description">Seus Horários programados:</p>
-                <v-row>
-                  <v-col v-for="horario in horarios" :key="horario.id" cols="12" sm="6" md="4" lg="3">
-                    <v-card class="mx-auto" max-width="300">
-                      <v-card-title>{{ horario.nome }}</v-card-title>
-                      <v-card-subtitle>{{ horario.tipoAlarme }}</v-card-subtitle>
-                      <v-card-text>
-                        <p><strong>Data:</strong> {{ horario.data }}</p>
-                        <p><strong>Comedouro:</strong> {{ horario.comedouroId }}</p>
-                      </v-card-text>
-                      <v-card-actions>
-                        <v-btn color="primary" class="mx-auto" @click="editarHorario(horario)">
-                          Ver detalhes
+                <h1 id="setup-title" class="setup-title">Horários do Comedouro</h1>
+                <template v-if="horarios.length > visibleCountDesktop">
+                  <div class="slider-container">
+                    <v-row align="center" justify="center">
+                      <v-col cols="1" class="arrow-col">
+                        <v-btn icon @click="prev" :disabled="currentIndex === 0">
+                          <v-icon>mdi-chevron-left</v-icon>
                         </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-col>
-                </v-row>
+                      </v-col>
+                      <!-- Área com os alarmes visíveis -->
+                      <v-col cols="10">
+                        <v-row>
+                          <v-col
+                            v-for="horario in visibleHorarios"
+                            :key="horario.id"
+                            cols="12"
+                            sm="6"
+                            md="4"
+                            lg="3"
+                          >
+                            <v-card class="mx-auto" max-width="300">
+                              <v-card-title>{{ horario.nome }}</v-card-title>
+                              <v-card-text>
+                                <p><strong>Data:</strong> {{ formatDateTime(horario.data) }}</p>
+                                <p>
+                                  <strong>Comedouro:</strong>
+                                  {{ horario.comedouro ? horario.comedouro.nome : horario.comedouroId }}
+                                </p>
+                                <p>
+                                  <strong>Status:</strong>
+                                  {{ horario.status === 1 ? 'Ativo' : 'Desativado' }}
+                                </p>
+                              </v-card-text>
+                              <v-card-actions>
+                                <v-btn color="primary" class="mx-auto" @click="editarHorario(horario)">
+                                  Ver detalhes
+                                </v-btn>
+                              </v-card-actions>
+                            </v-card>
+                          </v-col>
+                        </v-row>
+                      </v-col>
+                      <!-- Botão "próximo" -->
+                      <v-col cols="1" class="arrow-col">
+                        <v-btn
+                          icon
+                          @click="next"
+                          :disabled="currentIndex + visibleCountDesktop >= horarios.length"
+                        >
+                          <v-icon>mdi-chevron-right</v-icon>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </template>
+                <template v-else>
+                  <!-- Exibe normalmente se 4 ou menos -->
+                  <v-row>
+                    <v-col
+                      v-for="horario in horarios"
+                      :key="horario.id"
+                      cols="12"
+                      sm="6"
+                      md="4"
+                      lg="3"
+                    >
+                      <v-card class="mx-auto" max-width="300">
+                        <v-card-title>{{ horario.nome }}</v-card-title>
+                        <v-card-text>
+                          <p><strong>Data:</strong> {{ formatDateTime(horario.data) }}</p>
+                          <p>
+                            <strong>Comedouro:</strong>
+                            {{ horario.comedouro ? horario.comedouro.nome : horario.comedouroId }}
+                          </p>
+                          <p>
+                            <strong>Status:</strong>
+                            {{ horario.status === 1 ? 'Ativo' : 'Desativado' }}
+                          </p>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-btn color="primary" class="mx-auto" @click="editarHorario(horario)">
+                            Ver detalhes
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                </template>
                 <v-btn class="primary-action" @click="openModal()">
                   Adicionar novo horário
                 </v-btn>
@@ -56,8 +125,8 @@
           <!-- Caso não haja horários configurados -->
           <v-container v-if="!possuiHorarios" class="pa-0">
             <v-row justify="center">
-              <v-col cols="12" class="setup-content-mobile mt-12">
-                <h1 id="setup-title" class="setup-title-mobile">Horários do Comedouro!</h1>
+              <v-col cols="12" class="setup-content-mobile mt-12" style="padding-top: 60px;">
+                <h1 id="setup-title" class="setup-title-mobile">Horários do Comedouro</h1>
                 <p class="setup-description-mobile">
                   Parece que você não tem nenhum horário configurado no momento. Configure um agora.
                 </p>
@@ -72,17 +141,22 @@
           <!-- Exibe os horários já cadastrados -->
           <v-container v-else class="pa-0">
             <v-row justify="center">
-              <v-col cols="12" class="setup-content-mobile mt-12">
-                <h1 id="setup-title" class="setup-title-mobile">Horários do Comedouro!</h1>
-                <p class="setup-description-mobile">Seus Horários programados:</p>
+              <v-col cols="12" class="setup-content-mobile mt-12" style="padding-top: 20px;">
+                <h1 id="setup-title" class="setup-title-mobile">Horários do Comedouro</h1>
                 <v-row>
                   <v-col v-for="horario in horarios" :key="horario.id" cols="12">
                     <v-card class="mx-auto" max-width="300">
                       <v-card-title>{{ horario.nome }}</v-card-title>
-                      <v-card-subtitle>{{ horario.tipoAlarme }}</v-card-subtitle>
                       <v-card-text>
-                        <p><strong>Data:</strong> {{ horario.data }}</p>
-                        <p><strong>Comedouro:</strong> {{ horario.comedouroId }}</p>
+                        <p><strong>Data:</strong> {{ formatDateTime(horario.data) }}</p>
+                        <p>
+                          <strong>Comedouro:</strong>
+                          {{ horario.comedouro ? horario.comedouro.nome : horario.comedouroId }}
+                        </p>
+                        <p>
+                          <strong>Status:</strong>
+                          {{ horario.status === 1 ? 'Ativo' : 'Desativado' }}
+                        </p>
                       </v-card-text>
                       <v-card-actions>
                         <v-btn color="primary" class="mx-auto" @click="editarHorario(horario)">
@@ -92,7 +166,7 @@
                     </v-card>
                   </v-col>
                 </v-row>
-                <v-btn class="primary-action-mobile" @click="openModal()">
+                <v-btn class="primary-action-mobile" width="300" @click="openModal()">
                   Adicionar novo horário
                 </v-btn>
               </v-col>
@@ -100,7 +174,6 @@
           </v-container>
         </template>
 
-        <!-- Modal (Comum para Desktop e Mobile) -->
         <modal
           :value="modalVisible"
           @input="modalVisible = $event"
@@ -116,34 +189,55 @@
                   required
                   :rules="nomeRules"
                   clearable
-                  variant="outlined"
-                />
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="tipoAlarme"
-                  label="Tipo do Alarme"
-                  required
-                  clearable
-                  variant="outlined"
+                  outlined
                 />
               </v-col>
               <v-col cols="6">
                 <v-text-field
-                  v-model="data"
-                  label="Data"
+                  v-model="dateInput"
+                  label="Data (DD/MM/YYYY)"
                   required
                   clearable
-                  variant="outlined"
+                  outlined
+                  placeholder="ex: 31/12/2023"
                 />
               </v-col>
               <v-col cols="6">
                 <v-text-field
+                  v-model="timeInput"
+                  label="Hora (00:00)"
+                  required
+                  clearable
+                  outlined
+                  placeholder="ex: 23:59"
+                />
+              </v-col>
+              <v-col cols="6">
+                <v-select
+                  v-model="statusInput"
+                  :items="statusOptions"
+                  label="Status"
+                  required
+                  clearable
+                  outlined
+                  item-text="text"
+                  item-value="value"
+                  :item-props="statusItemProps"
+                  placeholder="Selecione o status"
+                />
+              </v-col>
+              <v-col cols="6">
+                <v-select
                   v-model="comedouroId"
+                  :items="availableComedouros"
                   label="Comedouro"
                   required
                   clearable
-                  variant="outlined"
+                  outlined
+                  item-text="nome"
+                  item-value="id"
+                  :item-props="comedouroItemProps"
+                  placeholder="Selecione um comedouro"
                 />
               </v-col>
             </v-row>
@@ -165,6 +259,7 @@ import {
   excluirAlarme,
   listarAlarme,
   obterUsuario,
+  obterComedouro,
 } from "./store/index.js";
 
 export default {
@@ -179,22 +274,44 @@ export default {
       nome: '',
       tipoAlarme: '',
       data: '',
+      statusInput: 1,
       comedouroId: '',
       editando: false,
       horarioAtual: null,
       nomeRules: [(v) => !!v || 'Nome é obrigatório'],
       isMobile: false,
       valid: false,
+      dateInput: '',
+      timeInput: '',
+      availableComedouros: [],
+      statusOptions: [
+        { text: "Ativo", value: 1 },
+        { text: "Desativado", value: 2 },
+      ],
+      currentIndex: 0,
+      visibleCountDesktop: 4,
     };
   },
   async created() {
     this.checkMobile();
     window.addEventListener('resize', this.checkMobile);
+    
     const horariosUsuario = await listarAlarme();
     if (horariosUsuario && horariosUsuario.length) {
       this.possuiHorarios = true;
       this.horarios = horariosUsuario;
     }
+    const comedourosDisponiveis = await obterComedouro();
+    if (comedourosDisponiveis) {
+      this.availableComedouros = Array.isArray(comedourosDisponiveis)
+        ? comedourosDisponiveis
+        : Object.values(comedourosDisponiveis);
+    }
+  },
+  computed: {
+    visibleHorarios() {
+      return this.horarios.slice(this.currentIndex, this.currentIndex + this.visibleCountDesktop);
+    },
   },
   methods: {
     openModal() {
@@ -203,7 +320,10 @@ export default {
       this.nome = '';
       this.tipoAlarme = '';
       this.data = '';
+      this.statusInput = 1;
       this.comedouroId = '';
+      this.dateInput = '';
+      this.timeInput = '';
     },
     editarHorario(horario) {
       this.editando = true;
@@ -212,12 +332,38 @@ export default {
       this.nome = horario.nome;
       this.tipoAlarme = horario.tipoAlarme;
       this.data = horario.data;
+      this.statusInput = horario.status;
       this.comedouroId = horario.comedouroId;
+      const d = new Date(horario.data);
+      if (!isNaN(d)) {
+        const dia = String(d.getDate()).padStart(2, "0");
+        const mes = String(d.getMonth() + 1).padStart(2, "0");
+        const ano = d.getFullYear();
+        const horas = String(d.getHours()).padStart(2, "0");
+        const minutos = String(d.getMinutes()).padStart(2, "0");
+        this.dateInput = `${dia}/${mes}/${ano}`;
+        this.timeInput = `${horas}:${minutos}`;
+      } else {
+        this.dateInput = '';
+        this.timeInput = '';
+      }
     },
     async salvarHorario() {
       const form = this.$refs.form;
       const isValid = form.validate();
       if (!isValid.errors) {
+        if (this.dateInput && this.timeInput) {
+          const parts = this.dateInput.split('/');
+          if (parts.length !== 3) {
+            alert("Data inválida. Use o formato DD/MM/YYYY.");
+            return;
+          }
+          const dia = parts[0];
+          const mes = parts[1];
+          const ano = parts[2];
+          this.data = `${ano}-${mes}-${dia}T${this.timeInput}:00`;
+        }
+        this.comedouroId = Number(this.comedouroId);
         try {
           if (this.editando) {
             await atualizarAlarme(
@@ -225,13 +371,15 @@ export default {
               this.nome,
               this.tipoAlarme,
               this.data,
-              this.comedouroId,
-              this.usuarioId.id
+              this.statusInput,
+              this.usuarioId.id,
+              this.comedouroId
             );
             Object.assign(this.horarioAtual, {
               nome: this.nome,
               tipoAlarme: this.tipoAlarme,
               data: this.data,
+              status: this.statusInput,
               comedouroId: this.comedouroId,
             });
           } else {
@@ -239,6 +387,7 @@ export default {
               this.nome,
               this.tipoAlarme,
               this.data,
+              this.statusInput,
               this.usuarioId.id,
               this.comedouroId
             );
@@ -248,6 +397,7 @@ export default {
                 nome: this.nome,
                 tipoAlarme: this.tipoAlarme,
                 data: this.data,
+                status: this.statusInput,
                 comedouroId: this.comedouroId,
                 usuarioId: this.usuarioId.id,
               });
@@ -279,9 +429,44 @@ export default {
     checkMobile() {
       this.isMobile = window.innerWidth <= 768;
     },
+    comedouroItemProps(item) {
+      return {
+        title: item.nome,
+        value: item.id,
+      };
+    },
+    statusItemProps(item) {
+      return {
+        title: item.text,
+        value: item.value,
+      };
+    },
+    formatDateTime(dateStr) {
+      if (!dateStr) return "";
+      const date = new Date(dateStr);
+      if (isNaN(date)) return dateStr;
+      const dia = String(date.getDate()).padStart(2, "0");
+      const mes = String(date.getMonth() + 1).padStart(2, "0");
+      const ano = date.getFullYear();
+      const horas = String(date.getHours()).padStart(2, "0");
+      const minutos = String(date.getMinutes()).padStart(2, "0");
+      return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
+    },
+    next() {
+      if (this.currentIndex + this.visibleCountDesktop < this.horarios.length) {
+        this.currentIndex += this.visibleCountDesktop;
+      }
+    },
+    prev() {
+      if (this.currentIndex - this.visibleCountDesktop >= 0) {
+        this.currentIndex -= this.visibleCountDesktop;
+      } else {
+        this.currentIndex = 0;
+      }
+    },
   },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.checkMobile);
+  beforeUnmount() {
+    window.removeEventListener("resize", this.checkMobile);
   },
 };
 </script>
@@ -335,7 +520,6 @@ export default {
   text-align: center;
   width: 100%;
   margin: 0;
-  height: 100vh;
 }
 
 .setup-title-mobile {
@@ -366,5 +550,16 @@ export default {
 .v-img {
   display: block;
   margin: 20px auto;
+}
+
+/* Estilos do slider */
+.arrow-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-container {
+  margin-top: 20px;
 }
 </style>
