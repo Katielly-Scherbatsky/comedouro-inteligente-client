@@ -9,19 +9,16 @@
     class="custom-modal"
   >
     <v-card class="modal-card">
-      <!-- Título -->
       <v-card-title class="modal-header">
         <span class="modal-title">{{ title }}</span>
       </v-card-title>
 
       <v-divider></v-divider>
 
-      <!-- Conteúdo -->
       <v-card-text class="modal-content">
         <slot></slot>
       </v-card-text>
 
-      <!-- Botões -->
       <v-card-actions class="modal-actions">
         <v-btn variant="tonal" color="grey" @click="closeModal">Fechar</v-btn>
         <v-btn color="primary" variant="flat" @click="onSave">Salvar</v-btn>
@@ -46,7 +43,7 @@ export default {
   data() {
     return {
       isVisible: this.value,
-      isMobile: false, // Flag para verificar se é mobile
+      isMobile: false,
     };
   },
   watch: {
@@ -66,7 +63,7 @@ export default {
       this.closeModal();
     },
     checkMobile() {
-      this.isMobile = window.innerWidth <= 768; // Define 768px como o breakpoint para mobile
+      this.isMobile = window.innerWidth <= 768;
     },
   },
   created() {
@@ -80,7 +77,6 @@ export default {
 </script>
 
 <style scoped>
-/* Cartão principal */
 .modal-card {
   background-color: #2A3240;
   color: white;
@@ -89,7 +85,6 @@ export default {
   overflow: hidden;
 }
 
-/* Cabeçalho */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -97,20 +92,17 @@ export default {
   padding: 16px;
 }
 
-/* Título do modal */
 .modal-title {
   font-size: 20px;
   font-weight: bold;
 }
 
-/* Conteúdo do modal */
 .modal-content {
   padding: 20px;
   font-size: 16px;
   line-height: 1.5;
 }
 
-/* Botões */
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -122,32 +114,31 @@ export default {
 /* Estilos específicos para mobile */
 @media (max-width: 768px) {
   .modal-card {
-    border-radius: 8px; /* Bordas mais arredondadas para mobile */
+    border-radius: 8px; 
   }
 
   .modal-header {
-    padding: 12px; /* Padding menor para mobile */
+    padding: 12px;
   }
 
   .modal-title {
-    font-size: 18px; /* Tamanho de fonte menor para mobile */
+    font-size: 18px; 
   }
 
   .modal-content {
-    padding: 16px; /* Padding menor para mobile */
-    font-size: 14px; /* Tamanho de fonte menor para mobile */
+    padding: 16px;
+    font-size: 14px;
   }
 
   .modal-actions {
-    padding: 12px; /* Padding menor para mobile */
+    padding: 12px;
   }
 
   .v-btn {
-    font-size: 14px; /* Tamanho de fonte menor para botões em mobile */
+    font-size: 14px;
   }
 }
 
-/* Animação ao abrir/fechar */
 .v-dialog {
   transition: all 0.3s ease-in-out;
 }

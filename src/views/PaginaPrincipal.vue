@@ -2,7 +2,6 @@
   <v-app style="background-color: #101113;">
     <v-main>
       <v-container fluid class="pa-0">
-        <!-- Verificação de carregamento -->
         <template v-if="loading">
           <v-row justify="center">
             <v-col cols="12" class="setup-content">
@@ -90,7 +89,6 @@
                 Clique aqui para<br> adicionar um pet!
               </v-btn>
 
-              <!-- Lista de Pets -->
               <v-row v-if="possuiPet">
                 <v-col v-for="pet in pets" :key="pet.id" cols="12">
                   <v-card class="mx-auto" max-width="300">
@@ -118,7 +116,6 @@
           </v-row>
         </template>
 
-        <!-- Modal (Comum para Desktop e Mobile) -->
         <modal
           :value="modalVisible"
           @input="modalVisible = $event"
@@ -204,8 +201,8 @@ export default {
       modalVisible: false,
       possuiPet: false,
       pets: [],
-      isMobile: false, // Flag para verificar se é mobile
-      loading: true, // Flag de carregamento
+      isMobile: false,
+      loading: true,
       nomeRules: [(v) => !!v || 'Nome é obrigatório'],
       valid: false,
     };
@@ -218,7 +215,7 @@ export default {
       this.possuiPet = true;
       this.pets = petsUsuario;
     }
-    this.loading = false; // Finaliza o carregamento
+    this.loading = false;
   },
   methods: {
     openModal() {

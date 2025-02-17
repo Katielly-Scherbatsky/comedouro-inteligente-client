@@ -9,16 +9,14 @@ import "leaflet/dist/leaflet.css";
 
 const isMobile = ref(window.innerWidth <= 768);
 
-// Computa a altura do mapa conforme  dispositivo
 const mapHeight = computed(() => (isMobile.value ? "745px" : "580px"));
 
-// Atualiza o valor de isMobile ao redimensionar a janela
 window.addEventListener("resize", () => {
   isMobile.value = window.innerWidth <= 768;
 });
 
 onMounted(async () => {
-  await nextTick(); // Aguarda a renderização da DOM
+  await nextTick();
 
   const mapContainer = document.getElementById("map");
   if (!mapContainer) {
@@ -26,14 +24,12 @@ onMounted(async () => {
     return;
   }
 
-  // Inicializa o mapa (centralizado inicialmente em Rondônia)
   const map = L.map("map").setView([-10.9111, -62.3104], 7);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors",
   }).addTo(map);
 
-  // Adiciona o marker da localização atual do usuário (se permitido)
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -41,7 +37,6 @@ onMounted(async () => {
         const lng = position.coords.longitude;
         const userMarker = L.marker([lat, lng]).addTo(map);
         userMarker.bindPopup("Você está aqui!").openPopup();
-        // Opcional: centraliza o mapa na posição do usuário com zoom maior
         map.setView([lat, lng], 12);
       },
       (error) => {

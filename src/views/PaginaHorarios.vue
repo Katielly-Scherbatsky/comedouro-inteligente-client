@@ -176,12 +176,10 @@ export default {
       modalVisible: false,
       possuiHorarios: false,
       horarios: [],
-      // Campos do formulário de alarme
       nome: '',
       tipoAlarme: '',
       data: '',
       comedouroId: '',
-      // Controle para edição
       editando: false,
       horarioAtual: null,
       nomeRules: [(v) => !!v || 'Nome é obrigatório'],
@@ -202,7 +200,6 @@ export default {
     openModal() {
       this.editando = false;
       this.modalVisible = true;
-      // Limpa os campos do formulário
       this.nome = '';
       this.tipoAlarme = '';
       this.data = '';
@@ -212,7 +209,6 @@ export default {
       this.editando = true;
       this.horarioAtual = horario;
       this.modalVisible = true;
-      // Preenche os campos com os dados do horário selecionado
       this.nome = horario.nome;
       this.tipoAlarme = horario.tipoAlarme;
       this.data = horario.data;
@@ -224,7 +220,6 @@ export default {
       if (!isValid.errors) {
         try {
           if (this.editando) {
-            // Atualiza o horário
             await atualizarAlarme(
               this.horarioAtual.id,
               this.nome,
@@ -240,7 +235,6 @@ export default {
               comedouroId: this.comedouroId,
             });
           } else {
-            // Cadastro de um novo horário
             const result = await cadastrarAlarme(
               this.nome,
               this.tipoAlarme,

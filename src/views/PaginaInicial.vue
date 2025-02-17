@@ -101,11 +101,9 @@ export default {
   },
   methods: {
     checkMobile() {
-      // Define o breakpoint para mobile (exemplo: 768px)
       this.isMobile = window.innerWidth <= 768;
     },
     registrar() {
-      // Sua lógica para registro
     },
   },
 };
@@ -166,7 +164,7 @@ export default {
 /* Estilo Mobile */
 .setup-content-mobile {
   background: #39434f;
-  padding: 60px; /* Padding menor para mobile */
+  padding: 60px;
   margin: 80px;
   max-width: 350px;
   text-align: center;

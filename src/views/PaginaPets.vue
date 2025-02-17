@@ -2,7 +2,6 @@
   <v-app style="background-color: #101113;">
     <v-main>
       <v-container fluid>
-        <!-- Verificação de carregamento -->
         <template v-if="loading">
           <v-row justify="center">
             <v-col cols="12" class="setup-content">
@@ -107,7 +106,6 @@
           </v-container>
         </template>
 
-        <!-- Modal (Comum para Desktop e Mobile) -->
         <modal
           :value="modalVisible"
           @input="modalVisible = $event"
@@ -161,8 +159,8 @@ export default {
       editando: false,
       petAtual: null,
       nomeRules: [(v) => !!v || 'Nome é obrigatório'],
-      isMobile: false, // Flag para verificar se é mobile
-      loading: true, // Flag de carregamento
+      isMobile: false,
+      loading: true,
       valid: false,
     };
   },
@@ -174,7 +172,7 @@ export default {
       this.possuiPet = true;
       this.pets = petsUsuario;
     }
-    this.loading = false; // Finaliza o carregamento
+    this.loading = false;
   },
   methods: {
     openModal() {
@@ -265,7 +263,7 @@ export default {
       }
     },
     checkMobile() {
-      this.isMobile = window.innerWidth <= 768; // Define 768px como o breakpoint para mobile
+      this.isMobile = window.innerWidth <= 768;
     },
   },
   beforeDestroy() {
@@ -317,7 +315,6 @@ export default {
 }
 
 /* Estilos para Mobile */
-/* Remova position: absolute e a altura fixa para permitir o scroll */
 .setup-content-mobile {
   background: #39434f;
   padding: 20px;

@@ -43,7 +43,6 @@
         </template>
       </v-container>
 
-      <!-- Modal para editar o perfil -->
       <modal :value="modalVisible" @input="modalVisible = $event" @save="salvarPerfil()" title="Editar Perfil">
         <v-form ref="form" v-model="valid">
           <v-text-field v-model="usuario.nome" label="Nome" required clearable variant="outlined" />
@@ -163,7 +162,6 @@ export default {
   border-radius: 10px;
 }
 
-/* Avatar (pode ser usado em ambas as versões) */
 .avatar {
   display: flex;
   align-items: center;

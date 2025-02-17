@@ -174,3 +174,11 @@ export const listarFornecedor = async (usuarioId, data, status, produtoId, preco
     "Erro na listagem de fornecedores:"
   );
 };
+
+export const obterComedouro = async () => {
+  return handleRequest(
+    () => api.get("/comedouro/obter"),
+    "Obtenção de comedouro bem-sucedida:",
+    "Erro ao obter comedouro:"
+  );
+};

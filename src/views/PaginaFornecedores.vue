@@ -337,17 +337,13 @@ export default {
       modalVisible: false,
       possuiFornecedor: false,
       fornecedores: [],
-      // Campos para cadastro
       nome: '',
       raca: '',
       idade: '',
       peso: '',
-      // Controle de visualização do mapa
       showMap: false,
-      // Validação do formulário
       valid: false,
       nomeRules: [(v) => !!v || 'Nome é obrigatório'],
-      // Controle para layout mobile
       isMobile: false,
     };
   },

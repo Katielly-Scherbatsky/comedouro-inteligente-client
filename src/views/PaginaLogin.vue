@@ -81,7 +81,7 @@ export default {
       senha: null,
       valid: false,
       showPassword: false,
-      isMobile: false, // Flag para verificar se é mobile
+      isMobile: false,
       passwordRules: [
         (v) => !!v || "O campo senha é obrigatório.",
       ],
@@ -106,7 +106,7 @@ export default {
       }
     },
     checkMobile() {
-      this.isMobile = window.innerWidth <= 768; // Define 768px como o breakpoint para mobile
+      this.isMobile = window.innerWidth <= 768;
     },
   },
   created() {
@@ -139,7 +139,7 @@ export default {
 }
 
 .brand-logo-mobile {
-  max-width: 150px; /* Tamanho menor para mobile */
+  max-width: 150px;
 }
 
 .setup-content {
@@ -153,8 +153,8 @@ export default {
 }
 
 .setup-content-mobile {
-  margin-left: 0; /* Remove a margem para mobile */
-  padding: 60px; /* Padding menor para mobile */
+  margin-left: 0;
+  padding: 60px;
   margin: 80px;
   max-width: 350px;
 }
@@ -167,7 +167,7 @@ export default {
 }
 
 .setup-title-mobile {
-  font-size: 24px; /* Tamanho menor para mobile */
+  font-size: 24px;
 }
 
 .setup-description {
@@ -179,7 +179,7 @@ export default {
 }
 
 .setup-description-mobile {
-  font-size: 14px; /* Tamanho menor para mobile */
+  font-size: 14px;
 }
 
 .primary-action {
@@ -193,7 +193,7 @@ export default {
 }
 
 .primary-action-mobile {
-  padding: 10px; /* Padding maior para mobile */
+  padding: 10px;
 }
 
 .text-field-password .v-input__control {
