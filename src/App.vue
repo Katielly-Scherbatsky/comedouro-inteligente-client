@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import PaginaInicial from '@/views/PaginaInicial.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useDisplay } from "vuetify";
 import PaginaCadastro from './views/PaginaCadastro.vue';
+import PaginaComedouro from './views/PaginaComedouro.vue';
 import PaginaConfiguracoes from './views/PaginaConfiguracoes.vue';
 import PaginaFornecedores from './views/PaginaFornecedores.vue';
 import PaginaHorarios from './views/PaginaHorarios.vue';
@@ -20,6 +21,13 @@ const isMobile = mobile;
 
 const usuario = ref<string | null>(null);
 const drawer = ref(!isMobile.value);
+
+function getIniciais(nome: string): string {
+  const nomes = nome.split(" ");
+  const primeiraLetra = nomes[0] ? nomes[0][0] : "";
+  const segundaLetra = nomes[1] ? nomes[1][0] : "";
+  return (primeiraLetra + segundaLetra).toUpperCase();
+}
 
 function usuarioLogado() {
   const userData = localStorage.getItem("usuario");
@@ -41,6 +49,10 @@ function deslogar() {
 onMounted(() => {
   usuarioLogado();
 });
+
+onUpdated(() => {
+  usuarioLogado();
+});
 </script>
 
 <template>
@@ -51,8 +63,8 @@ onMounted(() => {
   <v-card v-if="route.path !== '/' && route.path !== '/cadastrar' && route.path !== '/logar'">
     <v-layout>
       <v-app-bar v-if="isMobile" style="background-color: #101113;">
-        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>Menu</v-toolbar-title>
+        <v-app-bar-nav-icon style="color: white;" @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title style="color: white;">Menu</v-toolbar-title>
       </v-app-bar>
 
       <v-navigation-drawer
@@ -65,7 +77,7 @@ onMounted(() => {
       >
         <v-list color="transparent">
           <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/pagina-principal">
-            <v-list-item><img src="./assets//logo.svg" height="30" alt=""></v-list-item>
+            <v-list-item><img src="./assets//logo.png" height="30" alt=""></v-list-item>
           </v-btn>
         </v-list>
         <v-divider class="pt-2"></v-divider>
@@ -73,6 +85,9 @@ onMounted(() => {
         <v-list color="transparent">
           <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/pets">
             <v-list-item prepend-icon="mdi-paw" title="Pets"></v-list-item>
+          </v-btn>
+          <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/comedouro">
+            <v-list-item prepend-icon="mdi-food-takeout-box-outline" title="Comedouro"></v-list-item>
           </v-btn>
           <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/horarios">
             <v-list-item prepend-icon="mdi-alarm" title="Horários"></v-list-item>
@@ -91,19 +106,19 @@ onMounted(() => {
           <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/perfil">
             <v-list-item prepend-icon="mdi-account" title="Perfil"></v-list-item>
           </v-btn>
-          <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/configuracoes">
+          <!-- <v-btn height="45" width="100%" class="justify-start mb-2 elevation-0" style="background-color: #101113;" to="/configuracoes">
             <v-list-item prepend-icon="mdi-cog" title="Configurações"></v-list-item>
-          </v-btn>
+          </v-btn> -->
         </v-list>
 
         <v-divider class="py-2"></v-divider>
 
         <template v-slot:append>
           <div class="text-center user-info">
-            <v-avatar class="mr-2">
-              <v-img alt="User" src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
+            <v-avatar class="mr-2" color="primary">
+              {{ usuario ? getIniciais(usuario.nome) : "U" }}
             </v-avatar>
-            {{ usuario ? usuario?.nome : 'Nome' }}
+            {{ usuario ? usuario.nome : 'Nome' }}
             <v-btn variant="text" icon="mdi-logout" @click="deslogar()"></v-btn>
           </div>
         </template>
@@ -117,6 +132,7 @@ onMounted(() => {
     <PaginaFornecedores v-if="route.path === '/fornecedores'" />
     <PaginaPerfil v-if="route.path === '/perfil'" />
     <PaginaConfiguracoes v-if="route.path === '/configuracoes'" />
+    <PaginaComedouro v-if="route.path === '/comedouro'" />
   </v-card>
 </template>
 

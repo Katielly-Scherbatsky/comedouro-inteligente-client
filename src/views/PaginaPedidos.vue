@@ -10,7 +10,7 @@
               <p class="setup-description">
                 Parece que você não tem nenhum pedido.
               </p>
-              <v-img src="/src/assets/Pet App.png" width="300" />
+              <v-img src="/src/assets/pedidos.png" width="300" />
               <v-btn class="primary-action" @click="openModal()">Clique aqui para realizar um pedido!</v-btn>
           </v-col>
         </v-row>
@@ -64,7 +64,7 @@
           </v-form>
         </modal>
       </v-container>
-      <v-container v-else-if="!!possuiPedido">
+      <v-container v-else>
         <v-row justify="center">
           <v-col cols="12" class="setup-content">
               <h1 id="setup-title" class="setup-title">
@@ -154,7 +154,7 @@ import modal from '@/components/modal.vue';
 import { cadastrarPedido, listarPedido, obterUsuario } from "./store/index.js";
 
 export default {
-  name: 'ListarPedidos',
+  name: 'PaginaPedidos',
   components: {
     modal,
   },
@@ -168,7 +168,7 @@ export default {
   },
   async created() {
     const pedidosUsuario = await listarPedido();
-    if (pedidosUsuario !== null) {
+    if (pedidosUsuario.length) {
       this.possuiPedido = true;
       this.pedidos = pedidosUsuario;
     }

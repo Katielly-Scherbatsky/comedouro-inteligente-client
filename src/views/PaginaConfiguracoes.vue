@@ -65,7 +65,7 @@ import modal from '@/components/modal.vue';
 import { cadastrarPet, obterUsuario } from "./store/index.js";
 
 export default {
-  name: 'ListarPets',
+  name: 'PaginaConfiguracoes',
   components: {
     modal,
   },
